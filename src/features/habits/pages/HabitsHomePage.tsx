@@ -1,7 +1,14 @@
+"use client";
+
 import { EmptyHabitsState } from "@/features/habits/components/EmptyHabitsState";
-import { NewHabitButton } from "@/features/habits/components/NewHabitButton";
+import { AddHabitDialog } from "@/features/habits/components/AddHabitDialog";
 
 export function HabitsHomePage() {
+  function handleAddHabit(name: string, emoji: string) {
+    // Placeholder until the habits store is wired in.
+    console.log("Add habit", { name, emoji });
+  }
+
   return (
     <main className="min-h-screen text-stone-700">
       <section className="mx-auto flex max-w-xl flex-col items-center px-6 py-16 text-center">
@@ -13,7 +20,7 @@ export function HabitsHomePage() {
         </p>
 
         <EmptyHabitsState />
-        <NewHabitButton />
+        <AddHabitDialog onAdd={handleAddHabit} />
       </section>
     </main>
   );
