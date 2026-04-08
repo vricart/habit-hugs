@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { Plus } from "lucide-react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
 import {
@@ -10,51 +8,49 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger
+  DialogTitle
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { EMOJI_OPTIONS } from "../lib/constants";
+import type { Habit } from "@/types/habit";
 
-type AddHabitDialogProps = {
-  onAdd: (name: string, emoji: string) => void;
+type EditHabitDialogProps = {
+  habit: Habit;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (name: string, emoji: string) => void;
 };
 
-export function AddHabitDialog({ onAdd }: AddHabitDialogProps) {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [emoji, setEmoji] = useState("🏃");
+export function EditHabitDialog({ habit, open, onOpenChange, onSave }: EditHabitDialogProps) {
+  const [name, setName] = useState(habit.name);
+  const [emoji, setEmoji] = useState(habit.emoji);
+
+  useEffect(() => {
+    if (open) {
+      setName(habit.name);
+      setEmoji(habit.emoji);
+    }
+  }, [open, habit.name, habit.emoji]);
 
   function handleSubmit() {
     if (!name.trim()) return;
-    onAdd(name.trim(), emoji);
-    setName("");
-    setEmoji("🏃");
-    setOpen(false);
+    onSave(name.trim(), emoji);
+    onOpenChange(false);
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-          <Button size="default" className="mt-20 rounded-2xl gap-2">
-            <Plus className="h-5 w-5" />
-            New Habit
-          </Button>
-        </motion.div>
-      </DialogTrigger>
-
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create a new habit ✨</DialogTitle>
+          <DialogTitle>Edit habit ✏️</DialogTitle>
           <DialogDescription className="sr-only">
-            Enter a name and choose an emoji for your habit.
+            Update the name or icon for this habit.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 pt-2">
           <Input
-            placeholder="e.g. Keto diet, Read 30 min..."
+            placeholder="Habit name..."
             value={name}
             onChange={(event) => setName(event.target.value)}
             onKeyDown={(event) => event.key === "Enter" && handleSubmit()}
@@ -81,7 +77,7 @@ export function AddHabitDialog({ onAdd }: AddHabitDialogProps) {
           </div>
 
           <Button onClick={handleSubmit} className="h-12 w-full rounded-xl text-base font-semibold">
-            Add Habit
+            Save
           </Button>
         </div>
       </DialogContent>

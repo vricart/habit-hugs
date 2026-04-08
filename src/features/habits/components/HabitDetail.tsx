@@ -1,31 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, CalendarDays, Trash2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowLeft, Pencil, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { todayStr } from "@/features/habits/lib/date";
 import { pluralize } from "@/lib/utils";
 import type { Habit } from "@/types/habit";
+import { EditHabitDialog } from "./EditHabitDialog";
 import { HabitCalendar } from "./HabitCalendar";
 
 type HabitDetailProps = {
   habit: Habit;
   streak: number;
   onMarkDone: (date: string) => void;
+  onEdit: (name: string, emoji: string) => void;
   onDelete: () => void;
   onBack: () => void;
 };
 
-export function HabitDetail({
-  habit,
-  streak,
-  onMarkDone,
-  onDelete,
-  onBack
-}: HabitDetailProps) {
-  const [showCalendar, setShowCalendar] = useState(true);
+export function HabitDetail({ habit, streak, onMarkDone, onEdit, onDelete, onBack }: HabitDetailProps) {
+  const [editOpen, setEditOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string | null>(todayStr());
   const doneSelectedDate = selectedDate ? habit.completedDates.includes(selectedDate) : false;
 
@@ -45,10 +41,10 @@ export function HabitDetail({
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setShowCalendar((value) => !value)}
+            onClick={() => setEditOpen(true)}
             className="rounded-xl"
           >
-            <CalendarDays className="h-5 w-5" />
+            <Pencil className="h-5 w-5" />
           </Button>
           <Button
             variant="ghost"
@@ -89,22 +85,20 @@ export function HabitDetail({
         </Button>
       </motion.div>
 
-      <AnimatePresence>
-        {showCalendar && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="w-full max-w-[23rem] self-center overflow-hidden"
-          >
-            <HabitCalendar
-              habit={habit}
-              selectedDate={selectedDate}
-              onSelectDate={setSelectedDate}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="w-full max-w-[23rem] self-center">
+        <HabitCalendar
+          habit={habit}
+          selectedDate={selectedDate}
+          onSelectDate={setSelectedDate}
+        />
+      </div>
+
+      <EditHabitDialog
+        habit={habit}
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        onSave={onEdit}
+      />
     </motion.div>
   );
 }

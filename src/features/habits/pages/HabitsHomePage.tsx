@@ -10,7 +10,7 @@ import { HabitTile } from "@/features/habits/components/HabitTile";
 import { useHabits } from "@/features/habits/hooks/useHabits";
 
 export function HabitsHomePage() {
-  const { habits, addHabit, deleteHabit, toggleDate, getStreak } = useHabits();
+  const { habits, addHabit, editHabit, deleteHabit, toggleDate, getStreak } = useHabits();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedHabit = habits.find((habit) => habit.id === selectedId);
 
@@ -23,6 +23,7 @@ export function HabitsHomePage() {
             habit={selectedHabit}
             streak={getStreak(selectedHabit)}
             onMarkDone={(date) => toggleDate(selectedHabit.id, date)}
+            onEdit={(name, emoji) => editHabit(selectedHabit.id, name, emoji)}
             onDelete={() => {
               deleteHabit(selectedHabit.id);
               setSelectedId(null);

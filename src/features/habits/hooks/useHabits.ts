@@ -40,6 +40,12 @@ export function useHabits() {
     setHabits((current) => current.filter((habit) => habit.id !== id));
   }
 
+  function editHabit(id: string, name: string, emoji: string) {
+    setHabits((current) =>
+      current.map((habit) => (habit.id === id ? { ...habit, name, emoji } : habit))
+    );
+  }
+
   function toggleDate(id: string, date: string = todayStr()) {
     setHabits((current) =>
       current.map((habit) => {
@@ -56,5 +62,5 @@ export function useHabits() {
     );
   }
 
-  return { habits, addHabit, deleteHabit, toggleDate, getStreak: calcStreak };
+  return { habits, addHabit, editHabit, deleteHabit, toggleDate, getStreak: calcStreak };
 }
