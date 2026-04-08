@@ -30,7 +30,7 @@ export function HabitCalendar({ habit, selectedDate, onSelectDate }: HabitCalend
         className={cn("pointer-events-auto mx-auto p-3")}
         modifiers={{ done: completedDates }}
         modifiersClassNames={{
-          done: "rounded-full !bg-accent-foreground !text-white hover:!bg-accent-foreground/90"
+          done: "[&>button]:rounded-full [&>button]:!bg-accent-foreground [&>button]:!text-white [&>button:hover]:!bg-accent-foreground/90"
         }}
       />
     </div>
