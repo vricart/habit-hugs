@@ -33,7 +33,7 @@ export function Calendar({ className, classNames, showOutsideDays = true, ...pro
           "h-9 w-9 rounded-md p-0 font-normal text-foreground hover:bg-secondary"
         ),
         day_selected:
-          "rounded-xl border-transparent bg-primary/20 text-foreground ring-2 ring-primary hover:bg-primary/20 focus:bg-primary/20",
+          "rounded-xl border border-accent bg-accent/40 text-foreground hover:bg-accent/50 focus:bg-accent/50",
         today: "border border-border",
         outside: "text-muted-foreground/60",
         ...classNames

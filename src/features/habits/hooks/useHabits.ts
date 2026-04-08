@@ -54,10 +54,12 @@ export function useHabits() {
     setHabits((current) =>
       current.map((habit) => {
         if (habit.id !== id) return habit;
-        if (habit.completedDates.includes(date)) return habit;
+        const hasDate = habit.completedDates.includes(date);
         return {
           ...habit,
-          completedDates: [...habit.completedDates, date]
+          completedDates: hasDate
+            ? habit.completedDates.filter((value) => value !== date)
+            : [...habit.completedDates, date]
         };
       })
     );

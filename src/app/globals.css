@@ -78,3 +78,14 @@ body {
 .rdp-selected .rdp-day_button {
   border: 0 !important;
 }
+
+.rdp-selected .rdp-day_button {
+  background-color: hsl(var(--accent) / 0.4) !important;
+  border: 1px solid hsl(var(--accent)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+.rdp-selected .rdp-day_button:hover,
+.rdp-selected .rdp-day_button:focus-visible {
+  background-color: hsl(var(--accent) / 0.5) !important;
+}

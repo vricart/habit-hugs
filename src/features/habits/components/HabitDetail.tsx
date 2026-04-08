@@ -78,14 +78,13 @@ export function HabitDetail({
           onClick={() => {
             if (!selectedDate) return;
             onMarkDone(selectedDate);
-            setSelectedDate(null);
           }}
           size="lg"
           className={`h-16 w-full rounded-2xl text-lg font-bold ${
             doneSelectedDate ? "bg-success text-success-foreground hover:bg-success/90" : ""
           }`}
         >
-          {doneSelectedDate ? "✅ Marked done!" : "Mark as done"}
+          {doneSelectedDate ? "↩ Mark as not done" : "Mark as done"}
         </Button>
       </motion.div>
 
