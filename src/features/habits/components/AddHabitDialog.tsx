@@ -71,7 +71,7 @@ export function AddHabitDialog({ onAdd }: AddHabitDialogProps) {
           />
 
           <div>
-            <p className="mb-2 text-sm font-medium text-stone-500">Pick an icon</p>
+            <p className="mb-2 text-sm font-medium text-muted-foreground">Pick an icon</p>
             <div className="flex flex-wrap gap-2">
               {EMOJI_OPTIONS.map((option) => (
                 <button
@@ -80,8 +80,8 @@ export function AddHabitDialog({ onAdd }: AddHabitDialogProps) {
                   onClick={() => setEmoji(option)}
                   className={`flex h-10 w-10 items-center justify-center rounded-xl text-xl transition-all ${
                     emoji === option
-                      ? "bg-[#EE7B5F]/20 ring-2 ring-[#EE7B5F] scale-110"
-                      : "bg-stone-100 hover:bg-stone-200"
+                      ? "scale-110 bg-primary/20 ring-2 ring-primary"
+                      : "bg-secondary hover:bg-secondary/80"
                   }`}
                 >
                   {option}

@@ -50,6 +50,19 @@ export function useHabits() {
     );
   }
 
+  function markDateDone(id: string, date: string = getTodayIsoDate()) {
+    setHabits((current) =>
+      current.map((habit) => {
+        if (habit.id !== id) return habit;
+        if (habit.completedDates.includes(date)) return habit;
+        return {
+          ...habit,
+          completedDates: [...habit.completedDates, date]
+        };
+      })
+    );
+  }
+
   const getStreak = useMemo(
     () => (habit: Habit) => {
       if (habit.completedDates.length === 0) return 0;
@@ -68,5 +81,5 @@ export function useHabits() {
     []
   );
 
-  return { habits, addHabit, deleteHabit, toggleDate, getStreak };
+  return { habits, addHabit, deleteHabit, toggleDate, markDateDone, getStreak };
 }
