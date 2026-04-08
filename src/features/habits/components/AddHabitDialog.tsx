@@ -13,21 +13,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-
-const EMOJI_OPTIONS = [
-  "🏃",
-  "📖",
-  "💧",
-  "🥗",
-  "🧘",
-  "💪",
-  "🎨",
-  "🎵",
-  "💤",
-  "🧹",
-  "💊",
-  "🚭"
-];
+import { HABIT_EMOJI_OPTIONS } from "@/features/habits/constants/emojiOptions";
 
 type AddHabitDialogProps = {
   onAdd: (name: string, emoji: string) => void;
@@ -73,7 +59,7 @@ export function AddHabitDialog({ onAdd }: AddHabitDialogProps) {
           <div>
             <p className="mb-2 text-sm font-medium text-muted-foreground">Pick an icon</p>
             <div className="flex flex-wrap gap-2">
-              {EMOJI_OPTIONS.map((option) => (
+              {HABIT_EMOJI_OPTIONS.map((option) => (
                 <button
                   key={option}
                   type="button"

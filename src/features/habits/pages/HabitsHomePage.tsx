@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 import { EmptyHabitsState } from "@/features/habits/components/EmptyHabitsState";
@@ -11,7 +10,7 @@ import { HabitTile } from "@/features/habits/components/HabitTile";
 import { useHabits } from "@/features/habits/hooks/useHabits";
 
 export function HabitsHomePage() {
-  const { habits, addHabit, deleteHabit, markDateDone, getStreak } = useHabits();
+  const { habits, addHabit, deleteHabit, toggleDate, getStreak } = useHabits();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const selectedHabit = habits.find((habit) => habit.id === selectedId);
 
@@ -23,7 +22,7 @@ export function HabitsHomePage() {
             key="detail"
             habit={selectedHabit}
             streak={getStreak(selectedHabit)}
-            onMarkDone={(date) => markDateDone(selectedHabit.id, date)}
+            onMarkDone={(date) => toggleDate(selectedHabit.id, date)}
             onDelete={() => {
               deleteHabit(selectedHabit.id);
               setSelectedId(null);

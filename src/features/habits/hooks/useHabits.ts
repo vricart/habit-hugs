@@ -1,18 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
+import { todayStr, yesterdayOf } from "@/features/habits/lib/date";
 import type { Habit } from "@/types/habit";
-
-function getTodayIsoDate() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function getYesterdayIsoDate(date: string) {
-  const current = new Date(`${date}T00:00:00`);
-  current.setDate(current.getDate() - 1);
-  return current.toISOString().slice(0, 10);
-}
 
 function buildHabit(name: string, emoji: string): Habit {
   return {
@@ -21,6 +12,21 @@ function buildHabit(name: string, emoji: string): Habit {
     emoji,
     completedDates: []
   };
+}
+
+function calcStreak(habit: Habit) {
+  if (habit.completedDates.length === 0) return 0;
+
+  const dateSet = new Set(habit.completedDates);
+  let streak = 0;
+  let date = todayStr();
+
+  while (dateSet.has(date)) {
+    streak += 1;
+    date = yesterdayOf(date);
+  }
+
+  return streak;
 }
 
 export function useHabits() {
@@ -34,7 +40,7 @@ export function useHabits() {
     setHabits((current) => current.filter((habit) => habit.id !== id));
   }
 
-  function toggleDate(id: string, date: string = getTodayIsoDate()) {
+  function toggleDate(id: string, date: string = todayStr()) {
     setHabits((current) =>
       current.map((habit) => {
         if (habit.id !== id) return habit;
@@ -50,38 +56,5 @@ export function useHabits() {
     );
   }
 
-  function markDateDone(id: string, date: string = getTodayIsoDate()) {
-    setHabits((current) =>
-      current.map((habit) => {
-        if (habit.id !== id) return habit;
-        const hasDate = habit.completedDates.includes(date);
-        return {
-          ...habit,
-          completedDates: hasDate
-            ? habit.completedDates.filter((value) => value !== date)
-            : [...habit.completedDates, date]
-        };
-      })
-    );
-  }
-
-  const getStreak = useMemo(
-    () => (habit: Habit) => {
-      if (habit.completedDates.length === 0) return 0;
-
-      const dateSet = new Set(habit.completedDates);
-      let streak = 0;
-      let date = getTodayIsoDate();
-
-      while (dateSet.has(date)) {
-        streak += 1;
-        date = getYesterdayIsoDate(date);
-      }
-
-      return streak;
-    },
-    []
-  );
-
-  return { habits, addHabit, deleteHabit, toggleDate, markDateDone, getStreak };
+  return { habits, addHabit, deleteHabit, toggleDate, getStreak: calcStreak };
 }

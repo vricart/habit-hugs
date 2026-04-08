@@ -6,6 +6,7 @@ import { ArrowLeft, CalendarDays, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { todayStr } from "@/features/habits/lib/date";
+import { pluralize } from "@/lib/utils";
 import type { Habit } from "@/types/habit";
 import { HabitCalendar } from "./HabitCalendar";
 
@@ -66,7 +67,7 @@ export function HabitDetail({
       {streak > 0 && <p className="text-lg font-semibold text-primary">🔥 {streak} day streak!</p>}
 
       <p className="text-sm text-muted-foreground">
-        {habit.completedDates.length} total day{habit.completedDates.length !== 1 ? "s" : ""} completed
+        {pluralize(habit.completedDates.length, "day")} completed
       </p>
 
       <motion.div

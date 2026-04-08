@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 
+import { pluralize } from "@/lib/utils";
 import type { Habit } from "@/types/habit";
 
 type HabitTileProps = {
@@ -29,13 +30,13 @@ export function HabitTile({ habit, streak, onClick }: HabitTileProps) {
         </span>
         {streak > 0 && (
           <span className="mt-0.5 text-xs font-semibold text-primary">
-            🔥 {streak} day{streak !== 1 ? "s" : ""} streak
+            🔥 {pluralize(streak, "day")} streak
           </span>
         )}
       </div>
 
       <span className="shrink-0 rounded-full bg-secondary px-3 py-1 text-xs font-bold text-muted-foreground">
-        {habit.completedDates.length} day{habit.completedDates.length !== 1 ? "s" : ""}
+        {pluralize(habit.completedDates.length, "day")}
       </span>
     </motion.button>
   );
