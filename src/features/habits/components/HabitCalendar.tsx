@@ -15,7 +15,7 @@ export function HabitCalendar({ habit, selectedDate, onSelectDate }: HabitCalend
   const completedDates = habit.completedDates.map(fromLocalDateString);
 
   return (
-    <div className="w-full rounded-3xl bg-card p-4 shadow-md ring-1 ring-border">
+    <div className="w-fit rounded-3xl bg-card p-4 shadow-md ring-1 ring-border">
       <Calendar
         mode="single"
         selected={selectedDate ? fromLocalDateString(selectedDate) : undefined}

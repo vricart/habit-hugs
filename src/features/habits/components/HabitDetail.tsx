@@ -66,26 +66,22 @@ export function HabitDetail({ habit, streak, onMarkDone, onEdit, onDelete, onBac
         {pluralize(habit.completedDates.length, "day")} completed
       </p>
 
-      <motion.div
-        whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.95 }}
-        className="w-full max-w-[23rem] self-center"
-      >
-        <Button
-          onClick={() => {
-            if (!selectedDate) return;
-            onMarkDone(selectedDate);
-          }}
-          size="lg"
-          className={`h-16 w-full rounded-2xl text-lg font-bold ${
-            doneSelectedDate ? "bg-success text-success-foreground hover:bg-success/90" : ""
-          }`}
-        >
-          {doneSelectedDate ? "↩ Mark as not done" : "Mark as done"}
-        </Button>
-      </motion.div>
+      <div className="flex w-fit flex-col gap-6 self-center">
+        <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.95 }}>
+          <Button
+            onClick={() => {
+              if (!selectedDate) return;
+              onMarkDone(selectedDate);
+            }}
+            size="lg"
+            className={`h-16 w-full rounded-2xl text-lg font-bold ${
+              doneSelectedDate ? "bg-success text-success-foreground hover:bg-success/90" : ""
+            }`}
+          >
+            {doneSelectedDate ? "↩ Mark as not done" : "Mark as done"}
+          </Button>
+        </motion.div>
 
-      <div className="w-full max-w-[23rem] self-center">
         <HabitCalendar
           habit={habit}
           selectedDate={selectedDate}
