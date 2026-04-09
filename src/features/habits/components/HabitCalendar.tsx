@@ -15,7 +15,7 @@ export function HabitCalendar({ habit, selectedDate, onSelectDate }: HabitCalend
   const completedDates = habit.completedDates.map(fromLocalDateString);
 
   return (
-    <div className="mx-auto w-fit rounded-3xl bg-card p-4 shadow-md ring-1 ring-border">
+    <div className="w-full rounded-3xl bg-card p-4 shadow-md ring-1 ring-border">
       <Calendar
         mode="single"
         selected={selectedDate ? fromLocalDateString(selectedDate) : undefined}
@@ -27,7 +27,7 @@ export function HabitCalendar({ habit, selectedDate, onSelectDate }: HabitCalend
           const dateStr = toLocalDateString(day);
           onSelectDate(dateStr === selectedDate ? null : dateStr);
         }}
-        className={cn("pointer-events-auto mx-auto p-3")}
+        className="pointer-events-auto p-0"
         modifiers={{ done: completedDates }}
         modifiersClassNames={{
           done: "[&>button]:rounded-full [&>button]:!bg-accent-foreground [&>button]:!text-white [&>button:hover]:!bg-accent-foreground/90"
